@@ -1,0 +1,26 @@
+.mentor-profile {
+    border: 7px solid white; /* Add white stroke around the mentor's pfp */
+    border-radius: 20px;
+}
+
+.mentor-profile img{
+    border-radius: 20px;
+}
+
+
+.mentor-description {
+    font-size: 1.1rem; /* Adjust font size for mentor description */
+    color: #555; /* Set text color for mentor description */
+    margin-top: 10px; /* Add margin at the top of the description */
+}
+
+.mentor-social-icons a{
+    margin-right: 10px;
+    font-size: 30px;
+    color: rgb(130, 130, 130);
+    transition: color 0.2s ease;
+}
+
+.mentor-social-icons a:hover{
+    color: rgb(53, 117, 255);
+}

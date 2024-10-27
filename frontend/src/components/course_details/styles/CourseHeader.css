@@ -1,0 +1,30 @@
+.enroll-btn{
+    margin-right: 5px;
+}
+
+
+.enroll-btn{
+    padding: 10px 20px;
+    background-color:antiquewhite;
+    border-radius: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, margin 0.3s ease;
+    border: 2px solid;
+}
+
+
+.enroll-btn:hover, .leave-btn:hover{
+    box-shadow: 0px 0px 25px gray;     
+    }
+
+.enroll-btn:active, .leave-btn:active{
+    box-shadow: none;
+}
+
+.leave-btn{
+    padding: 10px 20px;
+    background-color:rgb(238, 29, 29);
+    border-radius: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, margin 0.3s ease;
+    border: 2px solid;
+    color: white;
+}

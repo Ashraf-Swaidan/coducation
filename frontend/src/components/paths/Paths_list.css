@@ -1,0 +1,19 @@
+/* Paths_list.css */
+.paths-list {
+  margin: 40px 0;
+  animation: slide-up 0.5s ease;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.path-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}

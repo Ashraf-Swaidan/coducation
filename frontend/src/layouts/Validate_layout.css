@@ -1,0 +1,55 @@
+body {
+    background-color: #f9f3ed;
+}
+
+.welcome-text {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    font-size: 27px;
+}
+
+.photo-section {
+    padding: 20px;
+    position: relative;
+}
+
+.photo-section img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 500px) {
+   
+    .welcome-text h1{
+        font-size: smaller;
+    }
+
+    .welcome-text {
+      position: absolute;
+      top: -15px; /* Adjust top position as needed */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1; /* Ensure the text appears above the clipart */
+      font-size: 24px; /* Adjust font size as needed */
+    }
+  }
+ 
+  @media (max-width: 350px) {
+    
+    .welcome-text h1{
+        font-size: 17px;
+    }
+
+    .welcome-text {
+      position: absolute;
+      top: -15px; /* Adjust top position as needed */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1; /* Ensure the text appears above the clipart */
+      font-size: 14px; /* Adjust font size as needed */
+    }
+  }

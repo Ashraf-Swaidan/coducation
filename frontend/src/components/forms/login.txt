@@ -1,0 +1,154 @@
+import { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
+import { faFacebook, faInstagram, faGoogle } from '@fortawesome/free-brands-svg-icons'; // Import Font Awesome icons
+import './LoginForm.css'; // Import CSS file for additional styling
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+
+const Login_form = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("func triggered");
+    try {
+      const response = await axios.post('http://localhost/coducation_backend/login.php', formData);
+      console.log("Response:", response);
+      console.log("Response data:", response.data);  // Log the response object
+      if (response.data.success == true) {
+        setLoggedIn(true);
+        console.log("LOGIN SUCCESSFUL");
+      } else {
+        setError("An unknown error occurred while logging in. Please try again.");
+        console.log("LOGIN NOT SUCCESSFUL");
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred while logging in. Please try again.');
+    }
+    
+    
+  };
+  
+
+  // Redirect to index route if logged in
+  if (loggedIn) {
+    return <Navigate to="/" />;
+  }
+
+  
+
+  return (
+    <div className="col-md-6 form-section login-form-container">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className="form-control mb-3"
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          className="form-control mb-3"
+          placeholder="Password"
+          required
+        />
+        <button type="submit" className="btn btn-primary">
+         Login
+        </button>
+        {error && <p className="text-danger mt-3">{error}</p>}
+      </form>
+
+      <div className="alternative-signup">
+        <p>Or sign in using:</p>
+        <div className="social-icons">
+          <FontAwesomeIcon icon={faFacebook} className="icon facebook" />
+          <FontAwesomeIcon icon={faInstagram} className="icon instagram" />
+          <FontAwesomeIcon icon={faGoogle} className="icon google" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login_form;
+
+
+
+<?php
+
+// Include the database connection file
+include 'db_connect.php';
+
+// Start the session
+session_start();
+
+// Get the JSON data sent in the request body
+$json_data = file_get_contents('php://input');
+
+// Decode the JSON data into an associative array
+$data = json_decode($json_data, true);
+
+// Check if data is not empty
+if (!empty($data) && isset($data['email']) && isset($data['password'])) {
+    // Extract email and password from the decoded data
+    $email = $data['email'];
+    $password = $data['password'];
+
+    // Prepare and execute the SQL query to check if user exists in students table
+    $stmt_students = $conn->prepare("SELECT student_id, password FROM students WHERE email = ?");
+    $stmt_students->bind_param("s", $email);
+    $stmt_students->execute();
+    $stmt_students->bind_result($user_id_students, $hashed_password_students);
+    $stmt_students->fetch();
+    $stmt_students->close();
+
+    // Prepare and execute the SQL query to check if user exists in mentors table
+    $stmt_mentors = $conn->prepare("SELECT mentor_id, password FROM mentors WHERE email = ?");
+    $stmt_mentors->bind_param("s", $email);
+    $stmt_mentors->execute();
+    $stmt_mentors->bind_result($user_id_mentors, $hashed_password_mentors);
+    $stmt_mentors->fetch();
+    $stmt_mentors->close();
+
+    // Check if user exists in either students or mentors table and password is correct
+    if (($user_id_students && password_verify($password, $hashed_password_students)) || ($user_id_mentors && password_verify($password, $hashed_password_mentors))) {
+        // Login successful, set user credentials in session
+        $_SESSION['user_id'] = ($user_id_students) ? $user_id_students : $user_id_mentors;
+        $_SESSION['user_type'] = ($user_id_students) ? 'student' : 'mentor';
+
+        // Return success response
+        $response = array('success' => true);
+        echo json_encode($response);
+    } else {
+        // Login failed
+        $response = array('success' => false, 'message' => 'Invalid email or password');
+        echo json_encode($response);
+    }
+} else {
+    // Invalid request
+    $response = array('success' => false, 'message' => 'Invalid request');
+    echo json_encode($response);
+}
+
+?>

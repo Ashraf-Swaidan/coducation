@@ -1,0 +1,86 @@
+
+
+.signup-container {
+    border: 1px solid #ced4da; 
+    border-radius: 0.25rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+
+}
+
+
+.form-section {
+    padding: 20px;
+}
+
+.account-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    text-transform: uppercase;
+    z-index: 1300;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.alternative-signup {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.icon {
+    font-size: 24px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.password-strength-meter {
+    margin-bottom: 15px;
+  }
+  
+  .progress {
+    width: 10%;
+    height: 7px;
+    border-radius: 5px;
+    overflow: hidden;
+    
+  }
+  
+  .progress-bar {
+    transition: width 0.3s ease-in-out;
+  }
+  
+  
+  .strength-1::-webkit-progress-value { background-color: #dc3545; } /* Weak */
+  .strength-2::-webkit-progress-value { background-color: #17a2b8; } /* Fair */
+  .strength-3::-webkit-progress-value { background-color: #28a745; } /* Strong */
+  .strength-4::-webkit-progress-value { background-color: #198754; } /* Very Strong */
+  
+  .emailErr{
+    color: red;
+    padding: 10px;
+  }
+
+  @media (max-width:996px) {
+
+    .signup-form-container {
+        position: relative; /* Change position to relative for the container */
+      }
+    .account-toggle {
+        top: -10px;
+    }
+  }

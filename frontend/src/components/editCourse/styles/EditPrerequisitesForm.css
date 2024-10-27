@@ -1,0 +1,38 @@
+.edit-prerequisites-form {
+    font-family: Arial, sans-serif;
+  }
+  
+  .prerequisite-item {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .prerequisite-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .prerequisite-title {
+    font-weight: bold;
+  }
+  
+  .prerequisite-buttons {
+    display: flex;
+  }
+  
+  .edit-button,
+  .delete-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  
+  .prerequisite-description {
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  

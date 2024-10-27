@@ -1,0 +1,13 @@
+/* markdown-editor.css */
+.custom-markdown-editor pre {
+  /* Set the background color of code blocks */
+    color: #333; /* Set the text color of code blocks */
+    padding: 10px; /* Add padding inside code blocks */
+    border-radius: 4px; /* Add rounded corners to code blocks */
+    overflow-x: auto; /* Add horizontal scroll for long lines of code */
+  }
+  
+  .custom-markdown-editor  code {
+    font-family: inherit; /* Use the same font family as the editor */
+  }
+  

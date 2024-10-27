@@ -1,0 +1,8 @@
+/* Custom styles for code blocks */
+pre {
+    background-color: #282c34; /* Dark background color */
+    color: #ffffff; /* Light text color */
+    padding: 10px; /* Add padding for spacing */
+    font-size: 14px; /* Adjust font size */
+    border-radius: 5px; /* Add rounded corners */
+}

@@ -1,0 +1,107 @@
+/* PathHeader.css */
+
+.path-header-container {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 400px; /* Adjust the height as needed */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-content {
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+}
+
+.path-title {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.path-description {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.path-stats {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.path-stats p {
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.join-path-btn,
+.teach-path-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+    font-size: 16px;
+    border: 1px solid white;
+}
+
+.join-path-btn:hover,
+.teach-path-btn:hover {
+    background-color: #e1e1e1;
+    
+    border: 1px solid  #ffffff9c;
+}
+
+.join-path-btn:active,.teach-path-btn:active{
+    background-color: #ffffff;
+}
+
+.leave-path-btn{
+    background-color: #ff3434;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+    font-size: 16px;
+
+}
+
+.leave-path-btn:hover{
+    background-color: #d92c2c;
+}
+
+@media (max-width:348px) {
+    .path-description{
+        font-size: 14px;
+    }
+
+    .join-path-btn,
+    .teach-path-btn,
+    .leave-path-btn{
+        padding: 5px 10px;
+        font-size: 13px;
+       
+    }
+}

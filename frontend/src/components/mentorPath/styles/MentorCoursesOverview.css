@@ -1,0 +1,26 @@
+/* MentorCoursesOverview.css */
+
+/* Container styling */
+.mentor-courses-container {
+    margin: 0 auto; /* Center the container */
+    max-width: 960px; /* Set maximum width */
+    padding: 0 15px; /* Add some padding */
+}
+
+/* Title styling */
+.mentor-courses-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Row styling */
+.mentor-courses-container .row {
+    justify-content: center; /* Center the cards */
+}
+
+/* Card styling */
+.mentor-courses-container .card {
+    max-width: 350px; /* Limit the card width */
+    margin-bottom: 20px; /* Add some spacing between cards */
+}

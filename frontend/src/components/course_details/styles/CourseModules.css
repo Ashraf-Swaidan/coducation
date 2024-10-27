@@ -1,0 +1,105 @@
+/* CourseModules.css */
+
+/* .modules-container{
+
+} */
+
+.module-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f97a;
+    
+}
+
+
+
+.module-header {
+    display: flex;
+    align-items: center;
+}
+
+.module-btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.module-title {
+    flex: 1;
+    margin: 0;
+}
+
+.module-lesson-count {
+    font-size: 14px;
+}
+
+.lesson-list {
+    padding-left: 30px; /* Indent lessons */
+}
+
+.view-all-btn{
+    padding: 10px 20px;
+    background: transparent;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid black;
+    white-space: nowrap;
+}
+
+.view-all-btn:hover{
+    transform: translateY(-10%);
+    box-shadow: 0px 0px 25px gray;
+}
+
+.view-all-btn:active{
+    box-shadow: none;
+}
+
+
+@media (max-width: 400px) {
+    .modules-container {
+      font-size: 14px; /* Decrease font size */
+    }
+  
+    .module-container {
+      padding: 10px; /* Decrease padding */
+    }
+  
+    .module-header {
+      font-size: 16px; /* Decrease font size */
+    }
+
+    .Num-modules h4{
+        font-size: 16px;
+    }
+  
+    .module-title {
+      font-size: 16px; /* Decrease font size */
+    }
+  
+    .module-btn {
+      font-size: 16px; /* Decrease font size */
+    }
+  
+    .module-lesson-count {
+      font-size: 14px; /* Decrease font size */
+    }
+  
+    .lesson-list {
+      padding-left: 20px; /* Decrease left padding */
+    }
+  
+    .lesson-title {
+      font-size: 14px; /* Decrease font size */
+    }
+    
+    .view-all-btn{
+        font-size: 12px;
+    }
+  }
+  

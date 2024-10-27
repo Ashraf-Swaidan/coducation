@@ -1,0 +1,52 @@
+/* MentorStatus.css */
+
+/* Container styling */
+.mentor-status-container {
+    margin-bottom: 30px;
+    background-color: #fff;
+}
+
+
+
+/* Statistics container styling */
+.mentor-stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow flex items to wrap onto the next line */
+}
+
+/* Individual statistic styling */
+.mentor-stat {
+    flex: 1;
+    text-align: center;
+}
+
+/* Icon styling */
+.mentor-icon {
+    font-size: 36px;
+    color: #1b242d; /* Adjust color as needed */
+}
+
+/* Number styling */
+.mentor-number {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Description styling */
+.mentor-description {
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+/* Responsive styling */
+@media (max-width: 568px) {
+    .mentor-stats {
+        flex-direction: column; /* Stack statistics vertically */
+    }
+
+    .mentor-stat {
+        flex: none; /* Reset flex property to prevent stretching */
+        width: 100%; /* Make each statistic occupy full width */
+    }
+}

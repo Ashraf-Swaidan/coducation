@@ -1,0 +1,251 @@
+/* const CourseClass = () => {
+    const { pathId, courseId } = useParams();
+    const path = pathsData.find(path => path.id === parseInt(pathId));
+    const [selectedLesson, setSelectedLesson] = useState(null);
+    if (!path || !path.courses) {
+        return <div>Error: Courses not found</div>;
+    }
+
+    const course = path.courses.find(course => course.id === parseInt(courseId));
+
+    if (!course) {
+        return <div>Error: Course not found</div>;
+    }
+
+    
+
+    const onLessonSelect = (lesson) => {
+        setSelectedLesson(lesson);
+    };
+
+    return (
+        <div id="page-container">
+            <Navbar />
+            <div id="content-wrap">
+                <CourseSidebar course={course} onLessonSelect={onLessonSelect} />
+                <div id="main-content">
+                    <div className="lesson-content">
+                        {selectedLesson ? (
+                            <LessonContent selectedLesson={selectedLesson} course={course} />
+                        ) : (
+                            <p>Please select a lesson from the sidebar</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+            <footer id="footer">
+                <Footer />
+            </footer>
+        </div>
+    );
+};
+
+export default CourseClass;
+*/
+
+
+/* const CourseSidebar = ({ course, onLessonSelect }) => {
+    const [collapsed, setCollapsed] = useState(true);
+    const [navbarHeight, setNavbarHeight] = useState(0);
+    const [selectedLesson, setSelectedLesson] = useState(null);
+
+    useEffect(() => {
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            setNavbarHeight(navbar.offsetHeight);
+        }
+    }, []);
+
+    const toggleSidebar = () => {
+        setCollapsed(!collapsed);
+    };
+
+    const handleLessonClick = (moduleId, lessonIndex) => {
+        const selected = moduleId.toString() + '-' + lessonIndex.toString();
+        setSelectedLesson(selected);
+        onLessonSelect(selected);;
+    };
+
+    return (
+        <div className={`sidebar ${collapsed ? 'collapsed' : ''}`} style={{ top: navbarHeight }}>
+            <button onClick={toggleSidebar} className="toggle-btn">
+                {collapsed ? '>' : '<'}
+            </button>
+            {!collapsed && <div className="navigation">
+                
+                {course.modules.map((module, moduleIndex) => (
+                    <div key={moduleIndex} className="module">
+                        <h6>{moduleIndex}.{module.title}</h6>
+                        <ul>
+                            {module.lessons.map((lesson, lessonIndex) => (
+                                <li key={lessonIndex} className={selectedLesson === moduleIndex.toString() + '-' + lessonIndex.toString() ? 'selected' : ''} onClick={() => handleLessonClick(moduleIndex, lessonIndex)}>
+                                    -{lessonIndex}.{lesson.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>}
+        </div>
+    );
+};
+
+export default CourseSidebar; */
+
+/* const LessonContent = ({ selectedLesson, course }) => {
+    // Check if selectedLesson exists
+    if (!selectedLesson || !course) {
+        return null;
+    }
+
+    // Split the selectedLesson prop into moduleIndex and lessonIndex
+    const [moduleIndex, lessonIndex] = selectedLesson.split('-');
+
+    // Get the module and lesson from the course data using the indices
+    const module = course.modules[moduleIndex];
+    const lesson = module.lessons[lessonIndex];
+
+    return (
+        <div className="lesson-content" style={{ paddingLeft: '20px' }}>
+         
+            {lesson && (
+                <div>
+                   
+                    {lesson.sections.map((section, index) => (
+                        <div key={index}>
+                            {section.type === 'text' && <p>{section.content}</p>}
+                            {section.type === 'image' && <img src={section.url} alt="Image" />}
+                            {section.type === 'video' && (
+                                <video controls className='video-player' >
+                                    <source src={section.url} type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default LessonContent;
+*/
+
+
+
+//CourseClass.CSS :
+#Ccontent-wrap {
+    display: flex;
+    flex-direction: row;
+    transition: margin-left 0.3s ease;
+}
+
+.Ccontent-wrap-collapsed {
+    margin-left: 50px; /* Adjust based on collapsed sidebar width */
+}
+
+.lesson-content {
+    flex: 1;
+    margin: 20px;
+    overflow-y: auto;
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.toggle-btn:hover {
+    color: #333;
+}
+
+
+//lessonCONTENT.css :
+.lesson-content-container {
+    margin-left: 20.33%; /* Reserve space for the sidebar */
+    padding: 20px; /* Add padding for the content */
+}
+
+.lesson-content {
+    margin-left: auto; /* Align content to the right */
+}
+
+.video-player {
+    max-width: 100%; /* Limit video width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure proper rendering */
+    margin-bottom: 20px; /* Add some space below the video */
+}
+
+
+//SIDEBAR.CSS
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    top: -10;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 50px;
+}
+
+.toggle-btn {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border-color: none;
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 25px;
+}
+
+.navigation {
+    padding: 20px;
+}
+
+.module {
+    margin-bottom: 20px;
+}
+
+.module h3 {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 5px 0;
+    cursor: pointer;
+    margin-left: 5px;
+
+}
+
+ul li:hover {
+    background-color: #ddd;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px; 
+    color: black;
+}
+
+.selected {
+    background-color: #ddd;
+    color: black;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px; /* Change to your preferred color */
+}

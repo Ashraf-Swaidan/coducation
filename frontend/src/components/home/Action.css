@@ -1,0 +1,66 @@
+.action-section {
+    padding: 40px 10px 10px 10px ;
+  }
+  
+  .action-card {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    min-height: 100%;
+    animation: slide-up 0.5s ease;
+  }
+  
+  .action-image {
+    width: 150px; /* Adjust the width as needed */
+    height: auto;
+    margin-right: 20px;
+    
+  }
+  
+  .action-content {
+    flex: 1;
+  }
+  
+  .action-card h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .action-card p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    background-color: #0056b3;
+  }
+  
+
+  @media (max-width: 1000px) {
+    .action-card{
+        flex-direction: column;
+    }
+  }
+

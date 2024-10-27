@@ -1,0 +1,48 @@
+.login-form-container {
+    padding: 20px;
+}
+
+.account-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    text-transform: uppercase;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.alternative-signup {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.icon {
+    font-size: 24px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+@media(max-width:990px) and (min-width: 501px){
+
+    .welcome-text h1{
+        font-size: 25px;
+    }
+    .welcome-text p{
+        font-size: 20px;
+    }
+  }

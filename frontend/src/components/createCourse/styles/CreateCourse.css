@@ -1,0 +1,70 @@
+.form-cont{
+    background-color:rgba(252, 252, 252, 0.526)   
+}
+
+.edit-preq-btn{
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 18px;
+    
+}
+
+.delete-preq-btn{
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 18px;
+}
+
+.save-preq-btn{
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 22px;
+}
+
+.save-preq-btn:hover{
+    color: rgb(46, 99, 5);
+}
+
+.delete-preq-btn:hover{
+    color: rgb(169, 2, 2);
+}
+
+/* Adjusted styles for inline draft-related buttons */
+
+/* Style for the container of draft-related buttons */
+.draft-buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px; /* Add some space between buttons */
+  }
+  
+  /* Style for the draft-related buttons */
+  .draft-buttons button {
+    background-color: #4CAF50; /* Green background */
+    border: none;
+    color: white;
+    padding: 8px 16px; /* Smaller padding */
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px; /* Smaller font size */
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  
+  .draft-buttons button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  /* Style for the select dropdown */
+  .draft-select {
+    padding: 8px 12px; /* Smaller padding */
+    font-size: 14px; /* Smaller font size */
+    border-radius: 6px;
+    width: 160px; /* Fixed width to prevent stretching */
+  }
+  
+  

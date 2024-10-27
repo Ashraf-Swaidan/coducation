@@ -1,0 +1,390 @@
+All good, now I'll tell you about how i want this whole thing to be styled and structured.
+
+Suppose there is a 10-cols row in a container. the row is split between 2 cols and 8 cols. The 2 cols displays a list of modules ( Incase no module yet, it shows a placeholder module that has a Create New Module button within it ). Now the 8-cols part will display fields for creating a new module incase that button was pressed. Yet supposing we're not creating a new module, but rather selecting one existing module from the list that exists in the 2 cols part, the 8-cols part at that moment will be split in 2-cols part, and a 6 cols part, the 2-cols part will display the list of lessons within this module (and incase no lessons yet, just like the module placeholder, there'll be a Create new lesson placeholder) while the 6 cols part will either view fields for creating a new lesson incase the new lesson btn was pressed, or view the list of sections that a selected existing lesson contains. Once again, if there is no section, there will be a placeholder for creating a section btn, which upon pressed, the fields required will show up in some remaining space. (Do note that everything created, must be capable of being edited, or deleted, thus every li element in a certain list of modules or a list of lessons or a list of sections will include an edit icon button and a delete icon btn, wjere the edit btn will trigger the same form of fields required, yet they'd be pre populated with the initial values, and the button would be "Save", and the Deleting btn deletes.
+
+Now in a new row, there will be the MarkdownEditor that allows mentor to select a section within a lesson within a module, and it'll provide content for that section. Pressing Save to the content will save the content for this exact section, and it can be accessible again by reselecting the section again. 
+
+
+
+import React, { useState } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { CiEdit } from "react-icons/ci";
+import { MdDeleteForever } from "react-icons/md";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import './styles/ModulesList.css';
+
+const ModulesList = ({ modules, setModules }) => {
+  const [editingModuleId, setEditingModuleId] = useState(null);
+  const [editingLessonId, setEditingLessonId] = useState(null);
+  const [editingSectionId, setEditingSectionId] = useState(null);
+  const [newModuleTitle, setNewModuleTitle] = useState('');
+  const [newLessonTitle, setNewLessonTitle] = useState('');
+
+  const handleEditModule = (moduleId) => {
+    setEditingModuleId(moduleId);
+    setEditingLessonId(null); // Reset lesson editing
+    setEditingSectionId(null); // Reset section editing
+    const moduleToEdit = modules.find(module => module.id === moduleId);
+    setNewModuleTitle(moduleToEdit.title);
+  };
+
+  const handleEditLesson = (moduleId, lessonId) => {
+    setEditingModuleId(moduleId);
+    setEditingLessonId(lessonId);
+    setEditingSectionId(null); // Reset section editing
+    const lessonToEdit = modules
+      .find(module => module.id === moduleId)
+      .lessons.find(lesson => lesson.id === lessonId);
+    setNewLessonTitle(lessonToEdit.title);
+  };
+
+  const handleEditSection = (moduleId, lessonId, sectionId) => {
+    setEditingModuleId(moduleId);
+    setEditingLessonId(lessonId);
+    setEditingSectionId(sectionId);
+    // Scroll to Markdown editor
+    document.getElementById('markdown-editor').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleUpdateModule = (moduleId) => {
+    const updatedModules = modules.map(module => {
+      if (module.id === moduleId) {
+        return {
+          ...module,
+          title: newModuleTitle
+        };
+      }
+      return module;
+    });
+    setModules(updatedModules);
+    setEditingModuleId(null);
+  };
+
+  const handleUpdateLesson = (moduleId, lessonId) => {
+    const updatedModules = modules.map(module => {
+      if (module.id === moduleId) {
+        return {
+          ...module,
+          lessons: module.lessons.map(lesson => {
+            if (lesson.id === lessonId) {
+              return {
+                ...lesson,
+                title: newLessonTitle
+              };
+            }
+            return lesson;
+          })
+        };
+      }
+      return module;
+    });
+    setModules(updatedModules);
+    setEditingLessonId(null);
+  };
+
+  const handleDeleteModule = (moduleId) => {
+    const updatedModules = modules.filter(module => module.id !== moduleId);
+    setModules(updatedModules);
+  };
+
+  const handleDeleteLesson = (moduleId, lessonId) => {
+    const updatedModules = modules.map(module => {
+      if (module.id === moduleId) {
+        return {
+          ...module,
+          lessons: module.lessons.filter(lesson => lesson.id !== lessonId)
+        };
+      }
+      return module;
+    });
+    setModules(updatedModules);
+  };
+
+  const handleDeleteSection = (moduleId, lessonId, sectionId) => {
+    const updatedModules = modules.map(module => {
+      if (module.id === moduleId) {
+        return {
+          ...module,
+          lessons: module.lessons.map(lesson => {
+            if (lesson.id === lessonId) {
+              return {
+                ...lesson,
+                sections: lesson.sections.filter(section => section.id !== sectionId)
+              };
+            }
+            return lesson;
+          })
+        };
+      }
+      return module;
+    });
+    setModules(updatedModules);
+  };
+
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const { source, destination, draggableId } = result;
+
+    // If the draggableId starts with "module-", it's a module
+    if (draggableId.startsWith('module-')) {
+      const startIndex = source.index;
+      const endIndex = destination.index;
+
+      const reorderedModules = Array.from(modules);
+      const [removedModule] = reorderedModules.splice(startIndex, 1);
+      reorderedModules.splice(endIndex, 0, removedModule);
+
+      setModules(reorderedModules);
+      return;
+    }
+
+    // If the draggableId starts with "lesson-", it's a lesson
+    if (draggableId.startsWith('lesson-')) {
+      const sourceModuleId = source.droppableId.replace('module-', '');
+      const destinationModuleId = destination.droppableId.replace('module-', '');
+      const lessonId = draggableId.replace('lesson-', '');
+
+      // Check if the lesson is moved within the same module
+      if (sourceModuleId === destinationModuleId) {
+        const module = modules.find(module => module.id === parseInt(sourceModuleId));
+        const reorderedLessons = Array.from(module.lessons);
+        const [removedLesson] = reorderedLessons.splice(source.index, 1);
+        reorderedLessons.splice(destination.index, 0, removedLesson);
+
+        const updatedModules = modules.map(module => {
+          if (module.id === parseInt(sourceModuleId)) {
+            return {
+              ...module,
+              lessons: reorderedLessons
+            };
+          }
+          return module;
+        });
+
+        setModules(updatedModules);
+        return;
+      }
+
+      // If the lesson is moved to a different module
+      const sourceModule = modules.find(module => module.id === parseInt(sourceModuleId));
+      const destinationModule = modules.find(module => module.id === parseInt(destinationModuleId));
+      const lesson = sourceModule.lessons.find(lesson => lesson.id === parseInt(lessonId));
+
+      const updatedSourceModule = {
+        ...sourceModule,
+        lessons: sourceModule.lessons.filter(lesson => lesson.id !== parseInt(lessonId))
+      };
+
+      const updatedDestinationModule = {
+        ...destinationModule,
+        lessons: [
+          ...destinationModule.lessons.slice(0, destination.index),
+          lesson,
+          ...destinationModule.lessons.slice(destination.index)
+        ]
+      };
+
+      const updatedModules = modules.map(module => {
+        if (module.id === parseInt(sourceModuleId)) {
+          return updatedSourceModule;
+        }
+        if (module.id === parseInt(destinationModuleId)) {
+          return updatedDestinationModule;
+        }
+        return module;
+      });
+
+      setModules(updatedModules);
+      return;
+    }
+
+    // If the draggableId starts with "section-", it's a section
+    if (draggableId.startsWith('section-')) {
+      // Implement reordering of sections within a lesson (similar logic to lessons within a module)
+    }
+  };
+
+  return (
+    <div>
+      <h3>Modules List</h3>
+      {modules.length > 0 ? (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="modules" direction="vertical" type="MODULE">
+            {(provided) => (
+              <ul
+                className="list-group"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {modules.map((module, moduleIndex) => (
+                  <Draggable
+                    key={`module-${module.id}`}
+                    draggableId={`module-${module.id}`}
+                    index={moduleIndex}
+                  >
+                    {(provided) => (
+                      <li
+                        className="list-group-item .module-i-item"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        {editingModuleId === module.id ? (
+                          <div>
+                            <input
+                              type="text"
+                              value={newModuleTitle}
+                              onChange={(e) => setNewModuleTitle(e.target.value)}
+                            />
+                            <button
+                              className='save-preq-btn ms-2'
+                              onClick={() => handleUpdateModule(module.id)}
+                            >
+                              <IoIosCheckmarkCircleOutline />
+                            </button>
+                          </div>
+                        ) : (
+                          <div>
+                            <strong>{module.title}</strong>
+                            <button
+                              className='edit-preq-btn ms-2'
+                              onClick={() => handleEditModule(module.id)}
+                            >
+                              <CiEdit />
+                            </button>
+                            <button
+                              className='delete-preq-btn ms-2'
+                              onClick={() => handleDeleteModule(module.id)}
+                            >
+                              <MdDeleteForever />
+                            </button>
+                          </div>
+                        )}
+                        <Droppable
+                          droppableId={`module-${module.id}`}
+                          direction="vertical"
+                          type="LESSON"
+                        >
+                          {(provided) => (
+                            <ul
+                              className="list-group"
+                              {...provided.droppableProps}
+                              ref={provided.innerRef}
+                            >
+                              {module.lessons.map((lesson, lessonIndex) => (
+                                <Draggable
+                                  key={`lesson-${lesson.id}`}
+                                  draggableId={`lesson-${lesson.id}`}
+                                  index={lessonIndex}
+                                >
+                                  {(provided) => (
+                                    <li
+                                      className="list-group-item"
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                    >
+                                      {editingLessonId === lesson.id ? (
+                                        <div>
+                                          <input
+                                            type="text"
+                                            value={newLessonTitle}
+                                            onChange={(e) => setNewLessonTitle(e.target.value)}
+                                          />
+                                          <button
+                                            className='save-preq-btn ms-2'
+                                            onClick={() => handleUpdateLesson(module.id, lesson.id)}
+                                          >
+                                            <IoIosCheckmarkCircleOutline />
+                                          </button>
+                                        </div>
+                                      ) : (
+                                        <div>
+                                          <strong className='mx-2'>{lesson.title}</strong>
+                                          <button
+                                            className='edit-preq-btn ms-2'
+                                            onClick={() => handleEditLesson(module.id, lesson.id)}
+                                          >
+                                            <CiEdit/>
+                                          </button>
+                                          <button
+                                            className='delete-preq-btn ms-2'
+                                            onClick={() => handleDeleteLesson(module.id, lesson.id)}
+                                          >
+                                            <MdDeleteForever/>
+                                          </button>
+                                        </div>
+                                      )}
+                                      <Droppable
+                                        droppableId={`lesson-${lesson.id}`}
+                                        direction="vertical"
+                                        type="SECTION"
+                                      >
+                                        {(provided) => (
+                                          <ul
+                                            className="list-group"
+                                            {...provided.droppableProps}
+                                            ref={provided.innerRef}
+                                          >
+                                            {lesson.sections.map((section, sectionIndex) => (
+                                              <Draggable
+                                                key={`section-${section.id}`}
+                                                draggableId={`section-${section.id}`}
+                                                index={sectionIndex}
+                                              >
+                                                {(provided) => (
+                                                  <li
+                                                    className="list-group-item"
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                  >
+                                                    <strong>Section {section.id}</strong>
+                                                    <button
+                                                      className='edit-preq-btn ms-2'
+                                                      onClick={() => handleEditSection(module.id, lesson.id, section.id)}
+                                                    >
+                                                      <CiEdit/>
+                                                    </button>
+                                                    <button
+                                                      className='delete-preq-btn ms-2'
+                                                      onClick={() => handleDeleteSection(module.id, lesson.id, section.id)}
+                                                    >
+                                                      <MdDeleteForever />
+                                                    </button>
+                                                  </li>
+                                                )}
+                                              </Draggable>
+                                            ))}
+                                            {provided.placeholder}
+                                          </ul>
+                                        )}
+                                      </Droppable>
+                                    </li>
+                                  )}
+                                </Draggable>
+                              ))}
+                              {provided.placeholder}
+                            </ul>
+                          )}
+                        </Droppable>
+                      </li>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
+      ) : (
+        <div>No Modules yet</div>
+      )}
+    </div>
+  );
+};
+
+export default ModulesList;

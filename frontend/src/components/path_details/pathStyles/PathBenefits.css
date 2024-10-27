@@ -1,0 +1,67 @@
+/* PathBenefits.css */
+
+.path-benefits-container {
+    text-align: center;
+    margin: 50px 30px;
+}
+
+.path-benefits-heading {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.benefits-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.benefit-item {
+    flex: 0 0 300px;
+    margin: 0 20px;
+    text-align: left;
+}
+
+.benefit-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.benefit-text {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.companies-list,
+.salary-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+.companies-list li,
+.salary-list li {
+    margin-bottom: 5px;
+}
+
+.path-reputation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.star-icon {
+    font-size: 3rem;
+    color: #FFD700;
+    margin-right: 10px;
+}
+
+.reputation-text {
+    font-size: 1.2rem;
+    color: #333;
+}
